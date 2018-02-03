@@ -3,8 +3,10 @@
 import sys
 import os
 import subprocess
-import time
+import importlib
 from machinekit import launcher
+from time import *
+
 
 launcher.register_exit_handler()
 #launcher.set_debug_level(5)
@@ -14,14 +16,17 @@ try:
     launcher.check_installation()
     launcher.cleanup_session()
     launcher.load_bbio_file('cramps2_cape.bbio')
-    launcher.start_process("configserver -n MiniKossel ~/Machineface")
+    launcher.start_process('videoserver --ini ~/videoserver/video.ini Webcam1') 
+    launcher.start_process("configserver -n MiniKossel ~/Machineface ~/Cetus/")
     launcher.start_process('linuxcnc CRAMPS.ini')
 #    launcher.start_process("python lcd.py");
-    while True:
-        launcher.check_processes()
-        time.sleep(1)
 except subprocess.CalledProcessError:
     launcher.end_session()
     sys.exit(1)
 
-sys.exit(0)
+# loop until script receives exit signal
+# or one of the started applications exited incorrectly
+# cleanup is done automatically
+while True:
+    sleep(1)
+    launcher.check_processes()
