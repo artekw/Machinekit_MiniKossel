@@ -17,7 +17,7 @@ try:
     launcher.cleanup_session()
     launcher.load_bbio_file('cramps2_cape.bbio')
     launcher.start_process('videoserver --ini ~/videoserver/video.ini Webcam1') 
-    launcher.start_process("configserver -n MiniKossel ~/Machineface ~/Cetus/")
+    launcher.start_process("configserver -n MiniKossel ~/Machineface_old")
     launcher.start_process('linuxcnc CRAMPS.ini')
 #    launcher.start_process("python lcd.py");
 except subprocess.CalledProcessError:
